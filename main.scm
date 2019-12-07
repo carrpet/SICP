@@ -14,7 +14,7 @@
 (define (assert msg b)
   ( if ( not b) (reporterr msg)))
 
-(define (assert-lists-eq a b)
+(define (assert-contents-eq a b)
   (if (not (equal? a b)) (reporterr "list contents not equal")))
 
 (define (asserteq msg a b)
@@ -96,5 +96,14 @@
         (else (list '- a1 a2))))
 
 ;;; tests for exponentiation
-(assert-lists-eq (deriv '(** x 2) 'x) '(* 2 x))
+
+;; d/dx(x^2)
+(assert-contents-eq (deriv '(** x 2) 'x) '(* 2 x))
+
+;; d/dx((xy)^3)
+(assert-contents-eq (deriv '(** (* x y) 3) 'x)
+                 '(* 3 (* (** (* x y) 2) y))) 
+
+;; d/dx(y^4)
+(assert-contents-eq (deriv '(** y 4) 'x) 0) 
 
