@@ -1,10 +1,30 @@
+;;; small testing framework
+
+(define (reportmsg msg)
+  (display msg)
+	(newline))
+
+
+(define (reporterr msg)
+  (display "ERROR: ")
+	(display msg)
+	(newline))
+
+
+(define (assert msg b)
+  ( if ( not b) (reporterr msg)))
+
+(define (assert-lists-eq a b)
+  (if (not (equal? a b)) (reporterr "list contents not equal")))
+
+(define (asserteq msg a b)
+  ( assert msg ( > 0.0001 (abs ( - a b)))))
+
 ;;; Section 2.3.2 Symbolic Differentiation
 
 ;;; Representation of symbolic Differentiation
 ;;; defined in the book
 
-;; test dependencies
-(load "tests/tests.scm")
 
 (define (sum? x) (and (pair? x) (eq? (car x) '+)))
 (define (addend s) (cadr s)) ;;Addend of the sum e.
@@ -75,6 +95,6 @@
           (- a1 a2))
         (else (list '- a1 a2))))
 
-
-(assert "deriv is wrong" (deriv '(** x 2) 'x) '(* 2 y))
+;;; tests for exponentiation
+(assert-lists-eq (deriv '(** x 2) 'x) '(* 2 x))
 
