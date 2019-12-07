@@ -3,6 +3,9 @@
 ;;; Representation of symbolic Differentiation
 ;;; defined in the book
 
+;; test dependencies
+(load "tests/tests.scm")
+
 (define (sum? x) (and (pair? x) (eq? (car x) '+)))
 (define (addend s) (cadr s)) ;;Addend of the sum e.
 (define (augend s) (caddr s));;Augend of the sum e.
@@ -71,4 +74,7 @@
         ((and (number? a1) (number? a2))
           (- a1 a2))
         (else (list '- a1 a2))))
+
+
+(assert "deriv is wrong" (deriv '(** x 2) 'x) '(* 2 y))
 
